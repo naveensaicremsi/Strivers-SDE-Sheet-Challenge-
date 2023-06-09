@@ -1,0 +1,86 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	int missing=-1;
+	int repeated=-1;
+	for(int i=1;i<=n;i++)
+	{
+		bool flag=false;
+		for(int j=0;j<n;j++)
+		{
+			if(i==arr[j]&&!flag)
+			{
+				flag=true;
+			}
+			else if(i==arr[j]&&flag)
+			{
+				repeated=i;
+			}
+		}
+		if(!flag)
+		{
+			missing=i;
+		}
+	}
+	return {missing,repeated};
+}
+TC-o(n*n)
+SC-O(1)
+
+
+
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	unordered_map<int,int>mpp;
+	int missing=-1;
+	int repeated=-1;
+	for(int i=0;i<n;i++)
+	{
+		mpp[arr[i]]+=1;
+	}	
+	for(int i=1;i<=n;i++)
+	{
+		if(mpp.find(i)==mpp.end())
+		{
+			missing=i;
+		}
+		else if(mpp[i]>1)
+		{
+			repeated=i;
+		}
+		else if(missing!=-1&&repeated!=-1)
+		{
+			break;
+		}
+	}
+	return {missing,repeated};
+}
+TC-O(n)+O(n)
+SC-O(n)
+
+
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	int originalSum=n*(n+1)/2;
+	int originalSum1=n*(n+1)*(2*n+1)/6;
+	int givenSum=0;
+	int givenSum1=0;
+	for(int i=0;i<n;i++)
+	{
+		givenSum+=arr[i];
+		givenSum1+=arr[i]*arr[i];
+	}
+	int var1=originalSum-givenSum;
+	int var2=originalSum1-givenSum1;
+	int z=var2/var1;
+	int missing=(var1+z)/2;
+	int repeating=-var1+missing;
+	return {missing,repeating};
+}
+TC-O(n)
+Sc-O(1)
