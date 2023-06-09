@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+
+vector<int> ninjaAndSortedArrays(vector<int>& arr1, vector<int>& arr2, int m, int n) {
+	for(int i=m;i<n+m;i++)
+	{
+		arr1[i]=arr2[i-m];
+	}
+	sort(arr1.begin(),arr1.end());
+	return arr1;
+}
+TC-O(n)+o(xlogx) where x is equal to n+m
+SC-O(1)
+
+#include <bits/stdc++.h>
+
+vector<int> ninjaAndSortedArrays(vector<int>& arr1, vector<int>& arr2, int m, int n) {
+	int ptr1=m-1;
+	int ptr2=n-1;
+	int index=n+m-1;
+	while(ptr1>=0&&ptr2>=0)
+	{
+		if(arr1[ptr1]>=arr2[ptr2])
+		{
+			arr1[index]=arr1[ptr1];
+			ptr1--;
+			index--;
+		}
+		else
+		{
+			arr1[index]=arr2[ptr2];
+			ptr2--;
+			index--;
+		}
+	}
+	while(ptr1>=0)
+	{
+		arr1[index]=arr1[ptr1];
+		ptr1--;
+		index--;
+	}
+	while(ptr2>=0)
+	{
+		arr1[index]=arr2[ptr2];
+		ptr2--;
+		index--;
+	}
+	return arr1;
+}
+
+TC-O(n+m)
+SC-O(1)
