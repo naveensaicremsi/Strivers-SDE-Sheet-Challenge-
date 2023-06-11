@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   int n=arr.size();
+   vector<vector<int>>ans;
+   for(int i=0;i<n;i++)
+   {
+      for(int j=i+1;j<n;j++)
+      {
+         if(arr[i]+arr[j]==s)
+         {
+            vector<int>ds;
+            ds.push_back(arr[i]);
+            ds.push_back(arr[j]);
+            sort(ds.begin(),ds.end());
+            ans.push_back(ds);
+         }
+      }
+   }
+   sort(ans.begin(),ans.end());
+   return ans;
+}
+
+TC-O(n*n)+O(mlogm)
+SC-O(x)
+
+
+#include <bits/stdc++.h>
+
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   unordered_map<int,int>mpp;
+   vector<vector<int>>ans;
+   int n=arr.size();
+   for(int i=0;i<n;i++)
+   {
+      if(mpp.find(s-arr[i])!=mpp.end())
+      {
+         vector<int>ds;
+         bool flag=false;
+         if(arr[i]<s-arr[i])
+         {
+            flag=true;
+            ds.push_back(arr[i]);
+         }
+         else{
+            ds.push_back(s-arr[i]);
+         }
+         if(flag)
+         {
+            ds.push_back(s-arr[i]);
+         }
+         else
+         {
+            ds.push_back(arr[i]);
+         }
+         ans.push_back(ds);
+         if(mpp[s-arr[i]]>1)
+         {
+            int c=mpp[s-arr[i]]-1;
+            while(c)
+            {
+               ans.push_back(ds);
+               c--;
+            }
+         }
+      }
+      mpp[arr[i]]+=1;
+   }
+   sort(ans.begin(),ans.end());
+   return ans;
+}
+
+TC-O(n)+O(xlogx)
+SC-O(n)+O(x)
+
+
