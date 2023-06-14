@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+
+int subarraysXor(vector<int> &arr, int x)
+{
+    int c=0;
+    int n=arr.size();
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i;j<n;j++)
+        {
+            int xor1=0;
+            for(int k=i;k<=j;k++)
+            {
+                xor1=xor1^arr[k];
+            }
+            if(xor1==x)
+            {
+                c++;
+            }
+        }
+    }
+    return c;
+}
+
+TC-O(n*n*n)
+SC-O(1)
+
+
+#include <bits/stdc++.h>
+
+int subarraysXor(vector<int> &arr, int x)
+{
+    int c=0;
+    int n=arr.size();
+    for(int i=0;i<n;i++)
+    {
+        int xor1=0;
+        for(int j=i;j<n;j++)
+        {
+            xor1=xor1^arr[j];
+            if(xor1==x)
+            {
+                c++;
+            }
+        }
+    }
+    return c;
+}
+
+
+TC-O(n*n)
+SC-O(1)
+
+
+#include <bits/stdc++.h>
+
+int subarraysXor(vector<int> &arr, int x)
+{
+    unordered_map<int,int>mpp;
+    mpp[0]=1;
+    int n=arr.size();
+    int xor1=0;
+    int c=0;
+    for(int i=0;i<n;i++)
+    {
+        xor1=xor1^arr[i];
+        int need=xor1^x;
+        if(mpp.find(need)!=mpp.end())
+        {
+            c+=mpp[need];
+        }
+        mpp[xor1]+=1;
+    }
+    return c;
+}
+
+TC-O(n)
+SC-O(n)
+
+
