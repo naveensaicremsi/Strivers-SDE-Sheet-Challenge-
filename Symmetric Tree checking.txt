@@ -1,0 +1,19 @@
+bool check(BinaryTreeNode<int>*p,BinaryTreeNode<int>*q)
+{
+    if(p==NULL||q==NULL)
+    {
+        return p==q;
+    }
+    return (p->data==q->data)&&check(p->left, q->right)&&check(p->right, q->left);
+}
+bool isSymmetric(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    return check(root->left,root->right);
+} 
+
+TC-O(n/2)
+SC-O(n/2) recursion stack space
