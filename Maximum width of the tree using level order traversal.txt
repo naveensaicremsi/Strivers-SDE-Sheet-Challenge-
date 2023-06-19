@@ -1,0 +1,31 @@
+int getMaxWidth(TreeNode<int> *root)
+{
+    int maxi=0;
+    if(root==NULL)
+    {
+        return maxi;
+    }
+    queue<TreeNode<int>*>q;
+    q.push(root);
+    while(!q.empty())
+    {
+        int n=q.size();
+        maxi=max(maxi,n);
+        for(int i=0;i<n;i++)
+        {
+            auto it=q.front();
+            q.pop();
+            if(it->left)
+            {
+                q.push(it->left);
+            }
+            if(it->right)
+            {
+                q.push(it->right);
+            }
+        }
+    }
+    return maxi;
+}
+TC-O(no of nodes)
+SC-O(no of nodes)
