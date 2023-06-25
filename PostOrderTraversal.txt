@@ -1,0 +1,16 @@
+void find(TreeNode *root,vector<int>&ds)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    find(root->left,ds);
+    find(root->right,ds);
+    ds.push_back(root->data);
+}
+vector<int> getPostOrderTraversal(TreeNode *root)
+{
+    vector<int>postorder;
+    find(root,postorder);
+    return postorder;
+}
