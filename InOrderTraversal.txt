@@ -1,0 +1,18 @@
+void find(TreeNode *root,vector<int>&inorder)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    find(root->left,inorder);
+    inorder.push_back(root->data);
+    find(root->right,inorder);
+}
+vector<int> getInOrderTraversal(TreeNode *root)
+{
+    vector<int>inorder;
+    find(root,inorder);
+    return inorder;
+}
+TC-O(n)
+SC-O(n)
