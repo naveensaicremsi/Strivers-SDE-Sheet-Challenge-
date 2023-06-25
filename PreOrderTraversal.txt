@@ -1,0 +1,19 @@
+void find(TreeNode *root,vector<int>&preorder)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    preorder.push_back(root->data);
+    find(root->left,preorder);
+    find(root->right,preorder);
+}
+vector<int> getPreOrderTraversal(TreeNode *root)
+{
+    vector<int>preorder;
+    find(root,preorder);
+    return preorder;
+}
+
+TC-O(n)
+SC-O(n)
