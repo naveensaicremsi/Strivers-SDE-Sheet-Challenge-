@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+
+string fourSum(vector<int> nums, int target, int n) {
+    sort(nums.begin(),nums.end());
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            int twoSum=nums[i]+nums[j];
+            int target2=target-twoSum;
+            int low=j+1;
+            int high=n-1;
+            while(low<high)
+            {
+                if(nums[low]+nums[high]==target2)
+                {
+                    return "Yes";
+                }
+                else if(nums[low]+nums[high]<target2)
+                {
+                    low++;
+                }
+                else
+                {
+                    high--;
+                }
+            }
+        }
+    }
+    return "No";
+}
