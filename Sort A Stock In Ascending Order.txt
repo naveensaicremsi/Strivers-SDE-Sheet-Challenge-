@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+void f(stack<int>&st,int el)
+{
+	if(st.size()==0||el>=st.top())
+	{
+		st.push(el);
+		return;
+	}
+	int topelement=st.top();
+	st.pop();
+	f(st,el);
+	st.push(topelement);
+} 
+void sortStack(stack<int> &st)
+{
+	if(st.empty()||st.size()==1)
+	{
+		return;
+	}
+	int topelement=st.top();
+	st.pop();
+	sortStack(st);
+	f(st,topelement);
+}
