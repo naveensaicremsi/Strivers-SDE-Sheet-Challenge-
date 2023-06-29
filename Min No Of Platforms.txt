@@ -1,0 +1,26 @@
+int calculateMinPatforms(int at[], int dt[], int n) {
+    int mini=1;
+    int left1=1;
+    int right1=0;
+    int c=1;
+    sort(at,at+n);
+    sort(dt,dt+n);
+    while(left1<n)
+    {
+        if(at[left1]>dt[right1])
+        {
+           right1++;
+        }
+        else
+        {
+            c++;
+        }
+        left1++;
+        mini=max(mini,c);
+    }
+    return mini;
+}
+/*
+TC-O(nlogn)+O(nlogn)+O(n)
+SC-O(1)
+*/
