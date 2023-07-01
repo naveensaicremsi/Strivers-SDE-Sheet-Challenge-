@@ -1,0 +1,36 @@
+#include <bits/stdc++.h> 
+class Queue {
+    queue<int>q;
+public:
+    Queue() {
+        }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        return q.empty()==true;
+    }
+
+    void enqueue(int data) {
+        // Implement the enqueue() function
+        q.push(data);
+    }
+
+    int dequeue() {
+        // Implement the dequeue() function
+        if (!q.empty()) {
+          int el = q.front();
+          q.pop();
+          return el;
+        }
+        return -1;
+    }
+
+    int front() {
+        // Implement the front() function
+        int el=-1;
+        if(!q.empty())
+        el=q.front();
+        return el;
+    }
+};
