@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+bool comp(pair<int,int>v1,pair<int,int>v2)
+{
+    int p1=v1.second;
+    int p2=v2.second;
+    int d1=v1.first;
+    int d2=v2.first;
+    if(p1==p2)
+    {
+        return d1<=d2;
+    }
+    else if(p1>p2)
+    {
+        return true;
+    }
+    return false;
+} 
+int jobScheduling(vector<vector<int>> &jobs)
+{
+    vector<pair<int,int>>v;
+    int n=jobs.size();
+    int maxi=-1;
+    for(int i=0;i<n;i++)
+    {
+        int deadline=jobs[i][0];
+        maxi=max(maxi,deadline);
+        int profit=jobs[i][1];
+        v.push_back({deadline,profit});
+    }
+    vector<int>t(maxi+1,-1);
+    sort(v.begin(),v.end(),comp);
+    int profit=0;
+    for(int i=0;i<n;i++)
+    {
+        int deadline=v[i].first;
+        int p=v[i].second;
+        for(int j=deadline;j>=1;j--)
+        {
+            if(t[j]==-1)
+            {
+                t[j]=1;
+                profit+=p;
+                break;
+            }
+        }
+    }
+    return profit;
+}
