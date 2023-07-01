@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+string reverseString(string &str){
+	int n=str.size();
+	string ans="";
+	if(n==0)
+	{
+		return ans;
+	}
+	int ind=0;
+	while(ind<n&&str[ind]==' ')
+	{
+		ind++;
+	}
+	int end=n-1;
+	string temp="";
+	while(end>=0&&str[end]==' ')
+	{
+		end--;
+	}
+	stack<string>st;
+	for(int i=ind;i<=end;i++)
+	{
+		if(str[i]==' ')
+		{
+			if(temp.size()>0)
+			{
+				st.push(temp);
+				temp="";
+			}
+		}
+		else
+		{
+			temp+=str[i];
+		}
+	}
+	if(temp.size()>0)
+	st.push(temp);
+	while(!st.empty())
+	{
+		auto it=st.top();
+		st.pop();
+		ans+=it;
+		ans+=" ";
+	}
+	return ans;	
+}
+
+TC-O(n)+O(w)
+SC-O(w*x)+O(n)
