@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+bool comp(pair<int,pair<int,int>>a,pair<int,pair<int,int>>b)
+{
+    int et1=a.first;
+    int id1=a.second.first;
+    int st1=a.second.second;
+    int et2=b.first;
+    int id2=b.second.first;
+    int st2=b.second.second;
+    if(et1<et2)
+    {
+        return true;
+    }
+    else if(et1==et2)
+    {
+        return id1<=id2;
+    }
+    return false;
+} 
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    vector<pair<int,pair<int,int>>>v;
+    int n=start.size();
+    for(int i=0;i<n;i++)
+    {
+        int id=i+1;
+        int st=start[i];
+        int et=end[i];
+        v.push_back({et,{id,st}});
+    }
+    sort(v.begin(),v.end(),comp);
+    vector<int>ans;
+    int id=v[0].second.first;
+    int limit=v[0].first;
+    ans.push_back(id);
+    for(int i=1;i<n;i++)
+    {
+        if(v[i].second.second>limit)
+        {
+            int id=v[i].second.first;
+            ans.push_back(id);
+            limit=v[i].first;
+        }
+    }
+    return ans;
+}
+TC-O(n)+O(nlogn)+O(n)
+SC-O(4*n)
