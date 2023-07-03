@@ -1,0 +1,32 @@
+void dfs(int**arr,int r,int c,vector<vector<int>>&vis,int n,int m,vector<int>&dx,vector<int>&dy)
+{
+   vis[r][c]=1;
+   for(int i=0;i<8;i++)
+   {
+      int nr=r+dx[i];
+      int nc=c+dy[i];
+      if(nr>=0&&nr<n&&nc>=0&&nc<m&&arr[nr][nc]==1&&!vis[nr][nc])
+      {
+         dfs(arr,nr,nc,vis,n,m,dx,dy);
+      }
+   }
+}
+int getTotalIslands(int** arr, int n, int m)
+{
+  vector<vector<int>>vis(n,vector<int>(m,0));
+  vector<int>dx={-1,0,1,0,-1,1,1,-1};
+  vector<int>dy={0,1,0,-1,1,1,-1,-1};
+  int c=0;
+  for(int i=0;i<n;i++)
+  {
+     for(int j=0;j<m;j++)
+     {
+        if(arr[i][j]==1&&!vis[i][j])
+        {
+           dfs(arr,i,j,vis,n,m,dx,dy);
+           c+=1;
+        }
+     }
+  }
+  return c;
+}
