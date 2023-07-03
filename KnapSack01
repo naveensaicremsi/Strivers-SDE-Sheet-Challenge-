@@ -1,0 +1,27 @@
+int f(int i,int current,vector<int>&values,vector<int>&weights,int w,vector<vector<int>>&dp)
+{
+	if(i==0)
+	{
+		if(current+weights[i]<=w)
+		{
+			return values[i];
+		}
+		return 0;
+	}
+	if(dp[i][current]!=-1)
+	{
+		return dp[i][current];
+	}
+	int notpick=f(i-1,current,values,weights,w,dp);
+	int pick=0;
+	if(current+weights[i]<=w)
+	{
+		pick=values[i]+f(i-1,current+weights[i],values,weights,w,dp);
+	}
+	return dp[i][current]=max(pick,notpick);
+}
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	vector<vector<int>>dp(n,vector<int>(w+1,-1));
+	return f(n-1,0,values,weights,w,dp);
+}
