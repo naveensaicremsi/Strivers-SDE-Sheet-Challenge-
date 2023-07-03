@@ -1,0 +1,39 @@
+void dfs(int node,vector<int>&ds,vector<int>&vis,vector<int>adj[])
+{
+    vis[node]=1;
+    ds.push_back(node);
+    for(auto adjcantNode:adj[node])
+    {
+        if(!vis[adjcantNode])
+        {
+            dfs(adjcantNode,ds,vis,adj);
+        }
+    }
+}
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    vector<vector<int>>ans;
+    vector<int>vis(V,0);
+    vector<int>adj[V];
+    for(int i=0;i<E;i++)
+    {
+        auto it=edges[i];
+        int u=it[0];
+        int v=it[1];
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    for(int i=0;i<V;i++)
+    {
+        if(!vis[i])
+        {
+            vector<int>ds;
+            dfs(i,ds,vis,adj);
+            ans.push_back(ds);
+        }
+    }
+    return ans;
+}
+
+TC-O(V+2E)
+SC-O(V)+O(V)
