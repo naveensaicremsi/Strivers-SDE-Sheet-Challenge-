@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+long f(int i,int *denominations,int target,vector<vector<long>>&dp)
+{
+    if(i==0)
+    {
+        return target%denominations[i]==0;
+    }
+    if(dp[i][target]!=-1)
+    {
+        return dp[i][target];
+    }
+    long  pick=0;
+    if(target>=denominations[i])
+    {
+        pick=f(i,denominations,target-denominations[i],dp);
+    }
+    long notpick=f(i-1,denominations,target,dp);
+    return dp[i][target]=pick+notpick;
+}
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    vector<vector<long>>dp(n,vector<long>(value+1,-1));
+    return f(n-1,denominations,value,dp);
+}
+TC-O(n*t)
+SC-O(n*t)+O(t)
