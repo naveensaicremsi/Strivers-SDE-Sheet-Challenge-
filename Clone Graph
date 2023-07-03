@@ -1,0 +1,22 @@
+graphNode *dfs(graphNode *node,unordered_map<graphNode*,graphNode*>&mpp)
+{
+	if(mpp.find(node)==mpp.end())
+	{
+		graphNode *temp=new graphNode(node->data);
+		mpp[node]=temp;
+	}
+	else
+	{
+		return mpp[node];
+	}
+	for(auto adjacentNode:node->neighbours)
+	{
+		mpp[node]->neighbours.push_back(dfs(adjacentNode,mpp));
+	}
+	return mpp[node];
+}
+graphNode *cloneGraph(graphNode *node)
+{
+    unordered_map<graphNode*,graphNode*>mpp;
+	return dfs(node,mpp);
+}
