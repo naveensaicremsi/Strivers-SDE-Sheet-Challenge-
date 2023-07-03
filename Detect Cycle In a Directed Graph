@@ -1,0 +1,46 @@
+bool dfs(int node,vector<int>&vis,vector<int>&pathvis,vector<int>adj[])
+{
+  vis[node]=1;
+  pathvis[node]=1;
+  for(auto adjacentNode:adj[node])
+  {
+    if(!vis[adjacentNode])
+    {
+      if(dfs(adjacentNode,vis,pathvis,adj))
+      {
+        return true;
+      }
+    }
+    else if(pathvis[adjacentNode])
+    {
+      return true;;
+    }
+  }
+  pathvis[node]=0;
+  return false;
+}
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+   vector<int>adj[n+1];
+   for(auto it:edges)
+   {
+     int u=it.first;
+     int v=it.second;
+     adj[u].push_back(v);
+   } 
+   vector<int>vis(n+1,0);
+   vector<int>pathvis(n+1,0);
+   for(int i=1;i<=n;i++)
+   {
+     if(!vis[i])
+     {
+       if(dfs(i,vis,pathvis,adj))
+       {
+         return true;
+       }
+     }
+   }
+   return false;
+}
+
+TC-O(V+E)
+SC-O(V)+O(V)+O(2E)+O(v)
