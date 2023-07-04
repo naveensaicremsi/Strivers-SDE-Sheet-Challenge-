@@ -1,0 +1,47 @@
+bool dfs(int node,vector<int>&vis,vector<int>adj[],vector<int>&color)
+{
+	vis[node]=1;
+	for(auto adjacentNode:adj[node])
+	{
+		if(!vis[adjacentNode])
+		{
+			color[adjacentNode]=!color[node];
+			if(dfs(adjacentNode,vis,adj,color)==false)
+			{
+				return false;
+			}
+		}
+		else if(color[adjacentNode]!=(!color[node]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+bool isGraphBirpatite(vector<vector<int>> &edges) {
+	int n=edges.size();
+	vector<int>adj[n];
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			if(edges[i][j]==1)
+			{
+				adj[i].push_back(j);
+			}
+		}
+	}
+	vector<int>vis(n,0);
+	vector<int>color(n,0);
+	for(int i=0;i<n;i++)
+	{
+		if(!vis[i])
+		{
+			if(dfs(i,vis,adj,color)==false)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
