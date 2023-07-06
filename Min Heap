@@ -1,0 +1,25 @@
+/*
+Declaration of min heap priority_queue<int,vector<int>,greater<int>>pq;
+Declaration of max heap priority_queue<int>pq;
+*/
+#include <bits/stdc++.h> 
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    priority_queue<int,vector<int>,greater<int>>pq;
+    vector<int>ans;
+    for(auto it:q)
+    {
+        int no=it[0];
+        int el=it[1];
+        if(no==1)
+        {
+            int element=pq.top();
+            pq.pop();
+            ans.push_back(element);
+        }
+        else
+        {
+            pq.push(el);
+        }
+    }
+    return ans;
+}
