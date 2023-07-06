@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+void f(int r,int c, vector<vector<int>>&grid,vector<vector<int>>&vis,vector<vector<int>>&ans,vector<int>&dx,vector<int>&dy,int n)
+{
+  if(r==0&&c==0)
+  {
+    vector<int>ds;
+    vis[r][c]=1;
+    for(int i=0;i<n;i++)
+    {
+      for(int j=0;j<n;j++)
+      {
+        ds.push_back(vis[i][j]);
+      }
+    }
+    ans.push_back(ds);
+    vis[r][c]=0;
+    return;
+  }
+  vis[r][c]=1;
+  for(int i=0;i<4;i++)
+  {
+    int nr=r+dx[i];
+    int nc=c+dy[i];
+    if(nr>=0&&nr<n&&nc>=0&&nc<n&&grid[nr][nc]==1&&!vis[nr][nc])
+    {
+      f(nr,nc,grid,vis,ans,dx,dy,n);
+    }
+  }
+  vis[r][c]=0;
+} 
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  vector<vector<int>>ans;
+  vector<vector<int>>vis(n,vector<int>(n,0));
+  /*
+  Rat can move in any direction left,right,top,bottom and 0 means blocked , 1 means it 
+  can move.
+  path from the starting position to ending position and only cells that are part of the 
+  solution must be 1 and the others should be 0.
+  */
+  vector<int>dx={-1,0,1,0};
+  vector<int>dy={0,1,0,-1};
+  if(maze[n-1][n-1]==1)
+  f(n-1,n-1,maze,vis,ans,dx,dy,n);
+  return ans;
+}
