@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+bool ispalindrome(string &s,int start,int end)
+{
+    while(start<=end)
+    {
+        if(s[start]!=s[end])
+        {
+            return false;
+        }
+        start++;
+        end--;
+    }
+    return true;
+}
+int f(int ind,string &str,int n,vector<int>&dp)
+{
+    if(ind==n)
+    {
+        return 0;
+    }
+    if(dp[ind]!=-1)
+    {
+        return dp[ind];
+    }
+    int mini=1e9;
+    for(int i=ind;i<n;i++)
+    {
+        if(ispalindrome(str,ind,i))
+        {
+            mini=min(mini,1+f(i+1,str,n,dp));
+        }
+    }
+    return dp[ind]=mini;
+}
+int palindromePartitioning(string str) {
+    int n=str.size();
+    vector<int>dp(n+1,-1);
+    return f(0,str,n,dp)-1;
+}
