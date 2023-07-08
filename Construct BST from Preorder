@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class TreeNode{
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+        ~TreeNode() {
+            if (left){
+                delete left;
+            }
+            if (right){
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+TreeNode<int>*f(int instart,int inend,vector<int>&inorder,int prestart,int preend
+,vector<int>&preOrder,unordered_map<int,int>&mpp)
+{
+    if(prestart>preend||instart>inend)
+    {
+        return NULL;
+    }
+    int inroot=mpp[preOrder[prestart]];
+    int numsleft=inroot-instart;
+    TreeNode<int>*root=new TreeNode<int>(preOrder[prestart]);
+    root->left=f(instart,inroot-1,inorder,prestart+1,prestart+numsleft,preOrder,mpp);
+    root->right=f(inroot+1,inend,inorder,prestart+numsleft+1,preend,preOrder,mpp);
+    return root;
+}
+TreeNode<int>* preOrderTree(vector<int> &preOrder){
+    int n=preOrder.size();
+    vector<int>inorder=preOrder;
+    sort(inorder.begin(),inorder.end());
+    unordered_map<int,int>mpp;
+    for(int i=0;i<n;i++)
+    {
+        mpp[inorder[i]]=i;
+    }
+    int instart=0;
+    int inend=n-1;
+    int prestart=0;
+    int preend=n-1;
+    return f(instart,inend,inorder,prestart,preend,preOrder,mpp);
+}
