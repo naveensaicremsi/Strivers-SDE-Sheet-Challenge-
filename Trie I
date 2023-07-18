@@ -1,0 +1,97 @@
+/*
+    Your Trie object will be instantiated and called as such:
+    Trie* obj = new Trie();
+    obj->insert(word);
+    bool check2 = obj->search(word);
+    bool check3 = obj->startsWith(prefix);
+*/
+
+struct Node
+{
+    struct Node *links[26];
+    bool flag=false;
+    bool containsKey(char ch)
+    {
+        return links[ch-'a']!=NULL;
+    }
+    struct Node *get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    void insert(char ch,struct Node *newnode)
+    {
+        links[ch-'a']=newnode;
+    }
+    void setFlag()
+    {
+        flag=true;
+    }
+    bool getFlag()
+    {
+        return flag;
+    }
+};
+class Trie {
+     Node *root;
+public:
+
+    /** Initialize your data structure here. */
+    Trie() {
+        root=new Node();
+    }
+
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(node->containsKey(word[i]))
+            {
+                node=node->get(word[i]);
+            }
+            else
+            {
+                node->insert(word[i],new Node());
+                node=node->get(word[i]);
+            }
+        }
+        node->setFlag();
+    }
+
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(node->containsKey(word[i]))
+            {
+                node=node->get(word[i]);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return node->getFlag()==true;
+    }
+
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        int n=prefix.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(node->containsKey(prefix[i]))
+            {
+                node=node->get(prefix[i]);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
