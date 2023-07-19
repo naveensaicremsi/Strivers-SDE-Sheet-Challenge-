@@ -1,0 +1,50 @@
+#include <bits/stdc++.h> 
+struct Node{
+    struct Node *links[26];
+    bool containsKey(char ch)
+    {
+        return links[ch-'a']!=NULL;
+    }
+    void insert(char ch,struct Node *newnode)
+    {
+        links[ch-'a']=newnode;
+    }
+    struct Node *get(char ch)
+    {
+        return links[ch-'a'];
+    }
+};
+class Trie
+{
+    struct Node *root;
+    public:
+    Trie()
+    {
+        root=new Node();
+    }
+    int count(string &word)
+    {
+        int n=word.size();
+        int c=0;
+        for(int i=0;i<n;i++)
+        {
+        struct Node *node=root;
+        for(int j=i;j<n;j++)
+        {
+            if(!node->containsKey(word[j]))
+            {
+                c++;
+                node->insert(word[j],new Node());
+            }
+            node=node->get(word[j]);
+        }
+        }
+        return c;
+
+    }
+};
+int distinctSubstring(string &word) {
+    int n=word.size();
+    Trie *trie=new Trie();
+    return trie->count(word);
+}
