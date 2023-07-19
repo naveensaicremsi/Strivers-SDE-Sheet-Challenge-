@@ -1,0 +1,92 @@
+#include <bits/stdc++.h> 
+struct Node
+{
+    struct Node *links[26];
+    bool flag=false;
+    void insert(char ch,struct Node *newnode)
+    {
+        links[ch-'a']=newnode;
+    }
+    bool containsKey(char ch)
+    {
+        return links[ch-'a']!=NULL;
+    }
+    struct Node *get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    void setflag()
+    {
+        flag=true;
+    }
+    bool getflag()
+    {
+        return flag;
+    }
+};
+class Trie
+{
+    struct Node *root;
+    public:
+    Trie()
+    {
+        root=new Node();
+    }
+    void insert(string &word)
+    {
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(!node->containsKey(word[i]))
+            {
+                node->insert(word[i],new Node());
+            }
+            node=node->get(word[i]);
+        }
+        node->setflag();
+    }
+    bool find(string &word)
+    {
+        struct Node *node=root;
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(!node->containsKey(word[i]))
+            {
+                return false;
+            }
+            node=node->get(word[i]);
+            if(node->getflag()==false)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+string completeString(int n, vector<string> &a){
+    sort(a.begin(),a.end());
+    Trie *trie=new Trie();
+    for(int i=0;i<n;i++)
+    {
+        trie->insert(a[i]);
+    }
+    string ans="";
+    for(int i=0;i<n;i++)
+    {
+        string word=a[i];
+        if(trie->find(word))
+        {
+            if(ans.size()<word.size())
+            {
+                ans=word;
+            }
+        }
+    }
+    if(ans.size()==0)
+    {
+        ans="None";
+    }
+    return ans;
+}
