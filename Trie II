@@ -1,0 +1,105 @@
+#include <bits/stdc++.h> 
+struct Node
+{
+    struct Node *links[26];
+    int prefixcount=0;
+    int countend=0;
+    void insert(char ch,struct Node *newnode)
+    {
+        links[ch-'a']=newnode;
+    }
+    bool contains(char ch)
+    {
+        return links[ch-'a']!=NULL;
+    }
+    struct Node *get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    void increasepc()
+    {
+        prefixcount++;
+    }
+    void decreasepc()
+    {
+        prefixcount--;
+    }
+    int getpc()
+    {
+        return prefixcount;
+    }
+    void increasece()
+    {
+        countend++;
+    }
+    void decreasece()
+    {
+        countend--;
+    }
+    int getce()
+    {
+        return countend;
+    }
+};
+class Trie{
+    struct Node *root;
+    public:
+
+    Trie(){
+        root=new Node();
+    }
+
+    void insert(string &word){
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(!node->contains(word[i]))
+            {
+                node->insert(word[i],new Node());
+            }
+            node=node->get(word[i]);
+            node->increasepc();
+        }
+        node->increasece();
+    }
+
+    int countWordsEqualTo(string &word){
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(!node->contains(word[i]))
+            {
+                return 0;
+            }
+            node=node->get(word[i]);
+        }
+        return node->getce();
+    }
+
+    int countWordsStartingWith(string &word){
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            if(!node->contains(word[i]))
+            {
+                return 0;
+            }
+            node=node->get(word[i]);
+        }
+        return node->getpc();
+    }
+
+    void erase(string &word){
+        int n=word.size();
+        struct Node *node=root;
+        for(int i=0;i<n;i++)
+        {
+            node=node->get(word[i]);
+            node->decreasepc();
+        }
+        node->decreasece();
+    }
+};
