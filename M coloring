@@ -1,0 +1,52 @@
+bool issafe(int node,vector<int>adj[],vector<int>&col,int c)
+{
+   for(auto adjcentNode:adj[node])
+   {
+       if(col[adjcentNode]==c)
+       {
+           return false;
+       }
+   }
+   return true;
+}
+bool f(int node,int n,vector<int>adj[],int m,vector<int>&col)
+{
+  if(node==n)
+  {
+      return true;
+  }
+  for(int i=0;i<m;i++)
+  {
+    if(issafe(node,adj,col,i))
+    {
+        col[node]=i;
+        if(f(node+1,n,adj,m,col))
+        {
+            return true;
+        }
+        col[node]=-1;
+    }
+  }
+  return false;
+}
+string graphColoring(vector<vector<int>> &mat, int m) {
+    int n=mat.size();
+    vector<int>adj[n];
+    vector<int>col(n,-1);
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            if(mat[i][j]==1)
+            {
+                adj[i].push_back(j);
+                adj[j].push_back(i);
+            }
+        }
+    }
+    if(f(0,n,adj,m,col))
+    {
+        return "YES";
+    }
+    return "NO";
+}
