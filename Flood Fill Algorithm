@@ -1,0 +1,23 @@
+void f(int row,int col,vector<vector<int>>&image,int gc,int nc1,vector<int>&dx,vector<int>&dy,int n,int m)
+{
+  image[row][col]=nc1;
+  for(int i=0;i<4;i++)
+  {
+      int nr=row+dx[i];
+      int nc=col+dy[i];
+      if(nr>=0&&nr<n&&nc>=0&&nc<m&&image[nr][nc]==gc&&image[nr][nc]!=nc1)
+      {
+          f(nr,nc,image,gc,nc1,dx,dy,n,m);
+      }
+  }
+}
+vector<vector<int>> floodFill(vector<vector<int>> &image, int x, int y, int newColor)
+{
+    int c=image[x][y];
+    int n=image.size();
+    int m=image[0].size();
+    vector<int>dx={-1,0,1,0};
+    vector<int>dy={0,1,0,-1};
+    f(x,y,image,c,newColor,dx,dy,n,m);
+    return image;
+}
